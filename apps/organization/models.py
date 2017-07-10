@@ -37,6 +37,9 @@ class CourseOrg(models.Model):
     def __str__(self):
         return self.name
 
+    def get_teacher_nums(self):
+        return self.teacher_set.all().count()
+
 
 class Teacher(models.Model):
     image = models.ImageField(upload_to='teacher/%Y/%m', verbose_name='头像',max_length=100,default='')

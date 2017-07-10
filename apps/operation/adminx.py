@@ -2,7 +2,7 @@
 __author__ = 'Legend'
 __date__ = '2017/7/5 12:51'
 
-from .models import UserAsk,CourseComments,UserMessage,UserFavorite
+from .models import UserAsk,CourseComments,UserMessage,UserFavorite,UserCourse
 import xadmin
 
 
@@ -10,6 +10,12 @@ class UserAskAdmin(object):
     list_display = ['name','mobile','course_name','add_time']
     search_fields = ['name','mobile','course_name']
     list_filter = ['name','mobile','course_name','add_time']
+
+
+class UserCourseAdmin(object):
+    list_display = ['user','course', 'add_time']
+    search_fields = ['user','course']
+    list_filter = ['user__nick_name', 'course__name', 'add_time']
 
 
 class CourseCommentsAdmin(object):
@@ -33,3 +39,4 @@ xadmin.site.register(UserAsk,UserAskAdmin)
 xadmin.site.register(CourseComments,CourseCommentsAdmin)
 xadmin.site.register(UserMessage,UserMessageAdmin)
 xadmin.site.register(UserFavorite,UserFavoriteAdmin)
+xadmin.site.register(UserCourse,UserCourseAdmin)
