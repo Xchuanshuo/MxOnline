@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import sys
+# mysql 数据库
+import pymysql
 
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,9 +28,9 @@ sys.path.insert(0,os.path.join(BASE_DIR,'apps'))
 SECRET_KEY = '*i3(lzot(z!5e9nf6m8s5tu83rjbmaee0kvlf&+2c$rldw&mqs'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -49,7 +52,8 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'captcha',
-    'pure_pagination'
+    'pure_pagination',
+    'DjangoUeditor',
 ]
 AUTH_USER_MODEL = 'users.UserProfile'
 
@@ -139,8 +143,8 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static')
-]
+     os.path.join(BASE_DIR,'static')
+ ]
 
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 25
@@ -151,3 +155,5 @@ EMAIL_FROM = '2414605975@qq.com'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+STATIC_ROOT = os.path.join(BASE_DIR,'static')

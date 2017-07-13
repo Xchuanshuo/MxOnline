@@ -11,7 +11,7 @@ class UserProfile(AbstractUser):
     gender = models.CharField(max_length=6,choices=(('male','男'),('female','女')),default='female')
     address = models.CharField(max_length=100,default='')
     mobile = models.CharField(max_length=11,null=True,blank=True)
-    image = models.ImageField(upload_to='image/%Y/%',default='image/default.png',max_length=100)
+    image = models.ImageField(upload_to='image/%Y/%m',default='image/default.png',max_length=100)
 
     class Meta:
         verbose_name = '用户信息'
@@ -20,11 +20,16 @@ class UserProfile(AbstractUser):
     def __str__(self):
         return self.username
 
+    #获取用户未读消息的数量
+    def get_unread_nums(self):
+        from operation.models import UserMessage
+        return UserMessage.objects.filter(user=self.id,has_read=False).count()
+
 
 class EmailVerifyRecord(models.Model):
     code = models.CharField(max_length=20,verbose_name='验证码')
     email = models.EmailField(max_length=50,verbose_name='邮箱')
-    send_type = models.CharField(choices=(('register','注册'),('forget','找回密码')),max_length=10)
+    send_type = models.CharField(choices=(('register','注册'),('forget','找回密码'),('update_email','修改邮箱')),max_length=30)
     send_time = models.DateTimeField(default=datetime.now)
 
     class Meta:

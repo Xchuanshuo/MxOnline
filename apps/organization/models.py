@@ -20,6 +20,7 @@ class CityDict(models.Model):
 class CourseOrg(models.Model):
     name = models.CharField(max_length=50,verbose_name='机构名称')
     desc = models.TextField(verbose_name='机构描述')
+    tag = models.CharField(default='全国知名',max_length=10,verbose_name='机构标签')
     catgory = models.CharField(verbose_name='机构类别',default='pxjg',max_length=20,choices=(('pxjg','培训机构'),('gx','高校'),('gr','个人')))
     click_nums = models.IntegerField(default=0,verbose_name='点击数')
     fav_nums = models.IntegerField(default=0,verbose_name='收藏数')
@@ -45,6 +46,7 @@ class Teacher(models.Model):
     image = models.ImageField(upload_to='teacher/%Y/%m', verbose_name='头像',max_length=100,default='')
     org = models.ForeignKey(CourseOrg,verbose_name='所属机构')
     name = models.CharField(max_length=20,verbose_name='教师名')
+    age = models.IntegerField(verbose_name='年龄',default=18)
     work_years = models.IntegerField(default=0,verbose_name='工作年限')
     work_comany = models.CharField(max_length=50,verbose_name='就职公司')
     work_position = models.CharField(max_length=50,verbose_name='公司职位')
@@ -60,3 +62,6 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_course_nums(self):
+        return self.course_set.all().count()

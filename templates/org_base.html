@@ -18,44 +18,50 @@
 <section class="headerwrap headerwrap2">
   <header>
     <div class="header2 header">
- {% if request.user.is_authenticated %}
+
             <div class="top">
                 <div class="wp">
                     <div class="fl"><p>服务电话：<b>33333333</b></p></div>
                     <!--登录后跳转-->
+                         {% if request.user.is_authenticated %}
                         <div class="personal">
                             <dl class="user fr">
-                                <dd>{{ username }}<img class="down fr" src="/static/images/top_down.png"/></dd>
-                                <dt><img width="20" height="20" src="/static/media/image/2016/12/default_big_14.png"/>
+                                <dd>{{ user.username }}<img class="down fr" src=""/></dd>
+                                <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/>
                                 </dt>
                             </dl>
                             <div class="userdetail">
                                 <dl>
                                     <dt><img width="80" height="80"
-                                             src="/static/media/image/2016/12/default_big_14.png"/></dt>
+                                             src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
                                     <dd>
-                                        <h2>admin</h2>
-                                        <p>{{ username }}</p>
+                                        <h2>{{ request.user.nick_name }}</h2>
+                                        <p>{{ request.user.username }}</p>
                                     </dd>
                                 </dl>
                                 <div class="btn">
-                                    <a class="personcenter fl" href="usercenter-info.html">进入个人中心</a>
-                                    <a class="fr" href="/logout/">退出</a>
+                                    <a class="personcenter fl" href="{% url 'users:user_info' %}">进入个人中心</a>
+                                    <a class="fr" href="{% url 'logout' %}">退出</a>
                                 </div>
                             </div>
                         </div>
+                              <a href="{% url 'users:mymessage' %}">
+                            <div class="msg-num">
+                            <span id="MsgNum">{{ request.user.get_unread_nums }}</span>
+                          </div>
+                         </a>
                     {% else %}
                         <a style="color:white" class="fr registerbtn" href="/register/">注册</a>
                         <a style="color:white" class="fr loginbtn" href="/login/">登录</a>
+                    {% endif %}
                 </div>
             </div>
-                   {% endif %}
     <div class="middle companyheader">
         <div class="wp">
             <img class="fl" style="width: 112px;height: 103px" src="{{ MEDIA_URL }}{{ course_org.image }}"/>
             <div class="head fl">
                 <h1>
-                    慕课网
+                     {{ course_org.name }}
                     <img src="{% static '/images/authentication.png' %}"/>
                     <img src="{% static '/images/gold.png' %}"/>
                 </h1>
@@ -79,7 +85,7 @@
 <section>
 	<div class="wp">
 		<ul  class="crumbs">
-            <li><a href="index.html">首页</a>></li>
+            <li><a href="/">首页</a>></li>
 			<li><a href="{% url 'org:org_list' %}">课程机构</a>></li>
 			<li>{% block page_path%}机构首页{% endblock %}</li>
 		</ul>
