@@ -142,9 +142,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-     os.path.join(BASE_DIR,'static')
- ]
+# STATICFILES_DIRS = [
+#      os.path.join(BASE_DIR,'static')
+#  ]
 
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 25

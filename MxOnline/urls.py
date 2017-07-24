@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url,include
 from django.views.generic import TemplateView
 import xadmin
@@ -21,6 +22,7 @@ from users.views import IndexView
 from MxOnline.settings import MEDIA_ROOT,STATIC_ROOT
 from organization.views import OrgView
 from users.views import LoginView,RegisterView,ActiveUserView,ForgetPwdView,ResetView,ModifyPwdView,LogoutView
+
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
@@ -51,3 +53,13 @@ urlpatterns = [
 #全局404页面配置
 handler404 = 'users.views.page_not_found'
 handler500 = 'users.views.page_error'
+
+if settings.DEBUG:
+    # debug_toolbar 插件配置
+    import debug_toolbar
+    urlpatterns.append(url(r'^__debug__/', include(debug_toolbar.urls)))
+else:
+    # 项目部署上线时使用
+    from MxOnline.settings import STATIC_ROOT
+    # 配置静态文件访问处理
+    urlpatterns.append(url(r'^static/(?P<path>.*)$', serve, {'document_root': STATIC_ROOT}))
